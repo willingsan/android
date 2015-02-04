@@ -1,0 +1,68 @@
+package menuapp.tmc.com.menuapp;
+
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.ContextMenu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+
+public class ContextMenuActivity extends ActionBarActivity {
+    ListView lv;
+    String[] contacts = {"Arun", "Sanat", "Jnanesh", "Waseem"};
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_context_menu);
+
+        lv = (ListView) findViewById(R.id.listViewContacts);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, contacts);
+        lv.setAdapter(adapter);
+        registerForContextMenu(lv);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.setHeaderTitle("Select the action");
+
+        menu.add(0, v.getId(), 0, "Call");
+        menu.add(0, v.getId(), 0, "SMS");
+        menu.add(0, v.getId(), 0, "Edit");
+        menu.add(0, v.getId(), 0, "Save");
+        menu.add(0, v.getId(), 0, "Delete");
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        String selectedItem = (String) item.getTitle();
+
+        switch(selectedItem){
+            case "Call":
+                Toast.makeText(this, "Calling...", Toast.LENGTH_LONG).show();
+                break;
+            case "SMS":
+                Toast.makeText(this, "Messaging...", Toast.LENGTH_LONG).show();
+                break;
+            case "Edit":
+                Toast.makeText(this, "Editing the contact...", Toast.LENGTH_LONG).show();
+                break;
+            case "Save":
+                Toast.makeText(this, "Saving the changes...", Toast.LENGTH_LONG).show();
+                break;
+            case "Delete":
+                Toast.makeText(this, "Deleting the contact...", Toast.LENGTH_LONG).show();
+                break;
+        }
+
+        return super.onContextItemSelected(item);
+    }
+}
